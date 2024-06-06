@@ -26,7 +26,7 @@ class App {
     private:
         void loadGameObjects();
 
-        Window engineWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
+        Window engineWindow{WIDTH, HEIGHT, "3D Engine"};
         Device engineDevice{engineWindow};
         Renderer engineRenderer{engineWindow, engineDevice};
         std::vector<GameObject> gameObjects;
