@@ -1,8 +1,8 @@
 #include "app.hpp"
 
-#include "render_system.hpp"
-#include "gravity_physics_system.hpp"
-#include "2D_model_system.hpp"
+#include "systems/render_system.hpp"
+#include "systems/gravity_physics_system.hpp"
+#include "systems/2D_model_system.hpp"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -36,6 +36,7 @@ void App::run() {
     red.rigidBody2d.velocity = {-.5f, .0f};
     red.model = circleModel;
     physicsObjects.push_back(std::move(red));
+
     auto blue = GameObject::createGameObject();
     blue.transform2d.scale = glm::vec2{.05f};
     blue.transform2d.translation = {-.45f, -.25f};

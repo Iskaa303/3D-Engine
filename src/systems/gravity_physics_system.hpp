@@ -25,7 +25,7 @@ class GravityPhysicsSystem {
         
             // clown town - just going to return 0 if objects are too close together...
             if (glm::abs(distanceSquared) < 1e-10f) {
-            return {.0f, .0f};
+                return {.0f, .0f};
             }
         
             float force =
@@ -37,20 +37,20 @@ class GravityPhysicsSystem {
         void stepSimulation(std::vector<GameObject>& physicsObjs, float dt) {
             // Loops through all pairs of objects and applies attractive force between them
             for (auto iterA = physicsObjs.begin(); iterA != physicsObjs.end(); ++iterA) {
-            auto& objA = *iterA;
-            for (auto iterB = iterA; iterB != physicsObjs.end(); ++iterB) {
-                if (iterA == iterB) continue;
-                auto& objB = *iterB;
-        
-                auto force = computeForce(objA, objB);
-                objA.rigidBody2d.velocity += dt * -force / objA.rigidBody2d.mass;
-                objB.rigidBody2d.velocity += dt * force / objB.rigidBody2d.mass;
-            }
+                auto& objA = *iterA;
+                for (auto iterB = iterA; iterB != physicsObjs.end(); ++iterB) {
+                    if (iterA == iterB) continue;
+                    auto& objB = *iterB;
+            
+                    auto force = computeForce(objA, objB);
+                    objA.rigidBody2d.velocity += dt * -force / objA.rigidBody2d.mass;
+                    objB.rigidBody2d.velocity += dt * force / objB.rigidBody2d.mass;
+                }
             }
         
             // update each objects position based on its final velocity
             for (auto& obj : physicsObjs) {
-            obj.transform2d.translation += dt * obj.rigidBody2d.velocity;
+                obj.transform2d.translation += dt * obj.rigidBody2d.velocity;
             }
         }
 };
