@@ -17,9 +17,11 @@ class KeyboardMovementController {
             int lookRight = GLFW_KEY_RIGHT;
             int lookUp = GLFW_KEY_UP;
             int lookDown = GLFW_KEY_DOWN;
+            int escape = GLFW_KEY_ESCAPE;
         };
 
         void moveInPlaneXZ(GLFWwindow* window, float dt, GameObject& gameObject);
+        void handleMouseInput(GLFWwindow* window, GameObject& gameObject);
 
         KeyMappings keys{};
         float moveSpeed{3.f};

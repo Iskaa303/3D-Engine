@@ -1,6 +1,6 @@
 #include "app.hpp"
 
-#include "keyboard_movement_controller.hpp"
+#include "input_controller.hpp"
 #include "camera.hpp"
 #include "systems/render_system.hpp"
 
@@ -24,6 +24,8 @@ App::~App() {}
 void App::run() {
     RenderSystem simpleRenderSystem{engineDevice, engineRenderer.getSwapChainRenderPass()};
     Camera camera{};
+    //GLFWcursor* cursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    //glfwSetCursor(engineWindow.getGLFWwindow(), cursor);
     
     auto viewerObject = GameObject::createGameObject();
     KeyboardMovementController cameraController{};
@@ -37,7 +39,10 @@ void App::run() {
             std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
         currentTime = newTime;
 
+        frameTime = glm::min(frameTime, MAX_FRAME_RATE);
+
         cameraController.moveInPlaneXZ(engineWindow.getGLFWwindow(), frameTime, viewerObject);
+        cameraController.handleMouseInput(engineWindow.getGLFWwindow(), viewerObject);
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspect = engineRenderer.getAspectRatio();

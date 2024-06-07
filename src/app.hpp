@@ -14,6 +14,7 @@ class App {
     public:
         static constexpr int WIDTH = 800;
         static constexpr int HEIGHT = 600;
+        static constexpr float MAX_FRAME_RATE = 144.0f;
 
         App();
         ~App();
