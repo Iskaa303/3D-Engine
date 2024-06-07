@@ -1,5 +1,6 @@
 #include "app.hpp"
 
+#include "camera.hpp"
 #include "systems/render_system.hpp"
 
 // libs
@@ -20,11 +21,20 @@ App::~App() {}
 
 void App::run() {
     RenderSystem simpleRenderSystem{engineDevice, engineRenderer.getSwapChainRenderPass()};
+    Camera camera{};
+
     while (!engineWindow.shouldClose()) {
         glfwPollEvents();
+
+        float aspect = engineRenderer.getAspectRatio();
+        // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+        camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
+
         if (auto commandBuffer = engineRenderer.beginFrame()) {
         engineRenderer.beginSwapChainRenderPass(commandBuffer);
-        simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects);
+
+        simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects, camera);
+
         engineRenderer.endSwapChainRenderPass(commandBuffer);
         engineRenderer.endFrame();
         }
@@ -94,7 +104,7 @@ void App::loadGameObjects() {
   std::shared_ptr<Model> engineModel = createCubeModel(engineDevice, {.0f, .0f, .0f});
   auto cube = GameObject::createGameObject();
   cube.model = engineModel;
-  cube.transform.translation = {.0f, .0f, .5f};
+  cube.transform.translation = {.0f, .0f, 2.5f};
   cube.transform.scale = {.5f, .5f, .5f};
   gameObjects.push_back(std::move(cube));
 }
